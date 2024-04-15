@@ -3,3 +3,9 @@
   column-gap: 20px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+
+#loader {
+  display: flex;
+  margin-top: 40%;
+  justify-content: center;
+}

@@ -1,20 +1,41 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import api from "../services/config";
 import Item from "../components/Item";
 import styles from "./products.module.css";
-import { dataContext } from "../App";
+import { Grid } from "react-loader-spinner";
 
 function Products() {
-  const data = useContext(dataContext);
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    api.get("/").then((res) => {
+      setData(res);
+      setIsLoading(false);
+    });
+  }, []);
+  console.log(data);
+
   return (
-    <div>
+    <>
       <h3>all products</h3>
-      <div className={styles.products}>
-        {data.map((item) => (
-          <Item key={item.id} info={item} />
-        ))}
-      </div>
-    </div>
+      {isLoading ? (
+        <div id={styles.loader}>
+          <Grid
+            visible={true}
+            height="80"
+            width="80"
+            color="#dd1d60"
+            radius="12.5"
+          />
+        </div>
+      ) : (
+        <div className={styles.products}>
+          {data.map((item) => (
+            <Item key={item.id} info={item} />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 
