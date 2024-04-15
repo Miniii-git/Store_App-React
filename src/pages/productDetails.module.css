@@ -1,0 +1,5 @@
+.Info {
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+}

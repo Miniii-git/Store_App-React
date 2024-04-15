@@ -1,0 +1,10 @@
+.Header {
+  display: flex;
+  border: 2px solid black;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.Header button {
+  padding: 10px;
+}
