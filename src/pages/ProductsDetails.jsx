@@ -8,7 +8,7 @@ function ProductsDetails() {
   const { id } = useParams();
 
   useEffect(() => {
-    api.get(`/${id}`).then((res) => setInfo(res));
+    api.get(`/products/${id}`).then((res) => setInfo(res));
   }, []);
 
   return (

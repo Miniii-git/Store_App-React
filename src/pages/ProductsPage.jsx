@@ -8,7 +8,7 @@ function ProductsPage() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    api.get("/").then((res) => {
+    api.get("/products").then((res) => {
       setData(res);
       setIsLoading(false);
     });
