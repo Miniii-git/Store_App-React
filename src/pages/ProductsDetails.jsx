@@ -1,9 +1,12 @@
+//import { DataContext } from "../context/FFF";
+//import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../services/config";
 import styles from "./productDetails.module.css";
 
 function ProductsDetails() {
+  //const { data } = useContext(DataContext);
   const [info, setInfo] = useState({});
   const { id } = useParams();
 
@@ -21,6 +24,13 @@ function ProductsDetails() {
         <img src={info.image} width="300px" height="300px" />
         <p>{info.description}</p>
       </div>
+
+      {/*<h4>{data[id].title}</h4>
+      <br />
+      <div className={styles.Info}>
+        <img src={data[id].image} width="300px" height="300px" />
+        <p>{data[id].description}</p>
+  </div>*/}
     </>
   );
 }
