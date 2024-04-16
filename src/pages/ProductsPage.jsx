@@ -1,20 +1,11 @@
-import { useEffect, useState } from "react";
-import api from "../services/config";
+import { DataContext } from "../context/FFF";
+import { useContext } from "react";
 import Item from "../components/Item";
 import styles from "./products.module.css";
 import { Grid } from "react-loader-spinner";
 
 function ProductsPage() {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    api.get("/products").then((res) => {
-      setData(res);
-      setIsLoading(false);
-    });
-  }, []);
-  console.log(data);
-
+  const { data, isLoading } = useContext(DataContext);
   return (
     <>
       <h3>all products</h3>
