@@ -4,7 +4,7 @@ import Item from "../components/Item";
 import styles from "./products.module.css";
 import { Grid } from "react-loader-spinner";
 
-function Products() {
+function ProductsPage() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -39,4 +39,4 @@ function Products() {
   );
 }
 
-export default Products;
+export default ProductsPage;
