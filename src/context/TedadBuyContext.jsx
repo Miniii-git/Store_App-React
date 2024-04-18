@@ -3,14 +3,10 @@ import { useState, createContext } from "react";
 export const TedadBuyProvider = createContext();
 
 function TedadBuyContext({ children }) {
-  const [tedadBuy, setTedadBuy] = useState(0);
-
-  function addHandler() {
-    setTedadBuy((tedadBuy) => tedadBuy + 1);
-  }
+  const [checkout, setCheckout] = useState([]);
 
   return (
-    <TedadBuyProvider.Provider value={{ tedadBuy, setTedadBuy }}>
+    <TedadBuyProvider.Provider value={{ checkout, setCheckout }}>
       {children}
     </TedadBuyProvider.Provider>
   );

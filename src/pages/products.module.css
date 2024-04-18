@@ -1,3 +1,28 @@
+.ProductsPage {
+  display: grid;
+
+  grid-template-columns: 4fr 1fr;
+}
+
+.category {
+  border: 2px solid black;
+  height: fit-content;
+  width: 200px;
+  margin: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.category button {
+  padding: 10px;
+}
+
+.category button:hover {
+  background-color: aqua;
+}
+
 .products {
   display: grid;
   column-gap: 20px;

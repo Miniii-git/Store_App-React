@@ -4,14 +4,13 @@ import styles from "./item.module.css";
 import { TbShoppingBagCheck } from "react-icons/tb";
 import { useContext } from "react";
 import { TedadBuyProvider } from "../context/TedadBuyContext";
+import { shortenText } from "../helpers/helperFunctions";
 
 function Item({ info }) {
-  const [tedadBuyEveryItem, setTedadBuyEveryItem] = useState(0);
-  const { tedadBuy, setTedadBuy } = useContext(TedadBuyProvider);
+  const { checkout, setCheckout } = useContext(TedadBuyProvider);
 
-  function addHandler() {
-    setTedadBuy((tedadBuy) => tedadBuy + 1);
-    setTedadBuyEveryItem((tedadBuyEveryItem) => tedadBuyEveryItem + 1);
+  function addHandler(event) {
+    setCheckout((checkout) => [...checkout, info]);
   }
 
   return (
@@ -21,12 +20,13 @@ function Item({ info }) {
       </Link>
 
       <hr />
+      <p>{shortenText(info.title)} </p>
       <p>${info.price} </p>
       <p>{info.rating.rate} *</p>
       <button onClick={addHandler}>
         <TbShoppingBagCheck style={{ fontSize: "30px" }} />
       </button>
-      <span>{tedadBuyEveryItem}</span>
+      <span> 0</span>
     </div>
   );
 }

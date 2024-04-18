@@ -6,7 +6,7 @@ import { TedadBuyProvider } from "../context/TedadBuyContext";
 import { PiShoppingCartBold } from "react-icons/pi";
 
 function Header() {
-  const { tedadBuy } = useContext(TedadBuyProvider);
+  const { checkout } = useContext(TedadBuyProvider);
   return (
     <div className={styles.Header}>
       <h1>
@@ -16,7 +16,7 @@ function Header() {
         <Link to="/checkout">
           <PiShoppingCartBold id={styles.shoppingCard} />
         </Link>
-        <span id={styles.showTedad}> {tedadBuy} </span>
+        <span id={styles.showTedad}> {checkout.length} </span>
       </div>
     </div>
   );

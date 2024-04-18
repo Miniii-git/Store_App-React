@@ -3,10 +3,17 @@ import { useContext } from "react";
 import { TedadBuyProvider } from "../context/TedadBuyContext";
 
 function Checkout() {
-  const { tedadBuy } = useContext(TedadBuyProvider);
+  const { checkout } = useContext(TedadBuyProvider);
   return (
     <div>
-      <h3> number of bought products : {tedadBuy}</h3>
+      <h3> number of bought products : {checkout.length}</h3>
+      <div>
+        {checkout.map((i) => (
+          <p key={i.id}>
+            <img width="20px" src={i.image} /> {i.title} : {i.price}
+          </p>
+        ))}
+      </div>
     </div>
   );
 }
