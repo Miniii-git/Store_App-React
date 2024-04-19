@@ -4,32 +4,59 @@ import { useSearchParams } from "react-router-dom";
 import Item from "../components/Item";
 import styles from "./products.module.css";
 import { Grid } from "react-loader-spinner";
-import Search from "../components/Search";
+import { categories } from "../constants/constat_var";
+import { HiOutlineSearch } from "react-icons/hi";
 
 function ProductsPage() {
-  const { products, setProducts, data, isLoading } = useContext(DataContext);
-  const [query, setQuery] = useSearchParams();
+  const [typing, setTyping] = useState("");
   const [searchedWord, setSearchedWord] = useState("");
+  const { data, isLoading, products, setProducts } = useContext(DataContext);
+  const [query, setQuery] = useState({ category: "all", search: "" });
+  const [urlQuery, setUrlQuery] = useSearchParams();
 
-  const categoryHandler = (event) => {
-    setProducts(data.filter((i) => i.category === event.target.value));
-    setQuery({ category: event.target.value });
+  const changeHandler = (e) => {
+    setTyping(e.target.value.toLowerCase());
   };
 
-  const showAll = () => {
-    setProducts(data);
-    setQuery({});
+  const searchHandler = () => {
+    setSearchedWord(typing);
+    setQuery((query) => ({ ...query, search: typing }));
   };
 
   useEffect(() => {
-    setProducts(products.filter((i) => i.title.match(searchedWord)));
-    let category_query = query.get("category");
-    setQuery({ category_query, search: searchedWord });
-  }, [searchedWord]);
+    setUrlQuery(query);
+    if (query.category === "all") {
+      setProducts(
+        data.filter((i) => i.title.toLocaleLowerCase().match(searchedWord))
+      );
+    } else {
+      setProducts(
+        data.filter(
+          (i) =>
+            i.title.toLocaleLowerCase().match(searchedWord) &&
+            i.category === query.category
+        )
+      );
+    }
+  }, [query]);
 
+  const categoryHandler = (event) => {
+    setQuery((query) => ({ ...query, category: event.target.value }));
+    if (event.target.value === "all") {
+      setProducts(data);
+    } else {
+      setProducts(data.filter((i) => i.category === event.target.value));
+    }
+  };
+  console.log(query);
   return (
     <>
-      <Search searchedWord={searchedWord} setSearchedWord={setSearchedWord} />
+      <div className={styles.Search}>
+        <input type="text" value={typing} onChange={changeHandler} />
+        <button onClick={searchHandler}>
+          <HiOutlineSearch />
+        </button>
+      </div>
       <div className={styles.ProductsPage}>
         <div>
           {isLoading ? (
@@ -51,21 +78,15 @@ function ProductsPage() {
           )}
         </div>
         <div className={styles.category}>
-          <button onClick={showAll} value="all">
-            all
-          </button>
-          <button onClick={categoryHandler} value="electronics">
-            electronics
-          </button>
-          <button onClick={categoryHandler} value="jewelery">
-            jewelery
-          </button>
-          <button onClick={categoryHandler} value="men's clothing">
-            men's clothing
-          </button>
-          <button onClick={categoryHandler} value="women's clothing">
-            women's clothing
-          </button>
+          {categories.map((category, index) => (
+            <button
+              key={index}
+              onClick={categoryHandler}
+              value={category.toLocaleLowerCase()}
+            >
+              {category}
+            </button>
+          ))}
         </div>
       </div>
     </>

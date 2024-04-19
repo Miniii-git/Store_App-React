@@ -6,6 +6,7 @@ export const DataContext = createContext();
 function FFF({ children }) {
   const [data, setData] = useState([]);
   const [products, setProducts] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

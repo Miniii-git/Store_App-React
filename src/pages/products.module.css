@@ -34,3 +34,20 @@
   margin-top: 100px;
   justify-content: center;
 }
+
+.Search {
+  margin: 20px 0px;
+}
+
+.Search input {
+  height: 30px;
+  border-radius: 5px;
+}
+
+.Search button {
+  height: 30px;
+  margin-left: 10px;
+  border-radius: 5px;
+  width: 30px;
+  font-size: 16px;
+}
