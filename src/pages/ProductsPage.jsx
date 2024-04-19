@@ -23,12 +23,23 @@ function ProductsPage() {
     setQuery((query) => ({ ...query, search: typing }));
   };
 
+  const categoryHandler = (event) => {
+    setQuery((query) => ({ ...query, category: event.target.value }));
+    /*if (event.target.value === "all") {
+    setProducts(data);
+    } else {
+     setProducts(data.filter((i) => i.category === event.target.value));
+     }*/
+  };
+
   useEffect(() => {
-    setUrlQuery(query);
     if (query.category === "all") {
       setProducts(
         data.filter((i) => i.title.toLocaleLowerCase().match(searchedWord))
       );
+      {
+        searchedWord ? setUrlQuery({ search: searchedWord }) : setUrlQuery({});
+      }
     } else {
       setProducts(
         data.filter(
@@ -37,17 +48,14 @@ function ProductsPage() {
             i.category === query.category
         )
       );
+      {
+        searchedWord
+          ? setUrlQuery(query)
+          : setUrlQuery({ category: query.category });
+      }
     }
   }, [query]);
 
-  const categoryHandler = (event) => {
-    setQuery((query) => ({ ...query, category: event.target.value }));
-    if (event.target.value === "all") {
-      setProducts(data);
-    } else {
-      setProducts(data.filter((i) => i.category === event.target.value));
-    }
-  };
   console.log(query);
   return (
     <>
