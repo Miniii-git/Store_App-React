@@ -51,3 +51,13 @@
   width: 30px;
   font-size: 16px;
 }
+
+#TiDelete {
+  position: relative;
+  top: 3.5px;
+  margin-left: 5px;
+}
+
+#TiDelete:hover {
+  color: red;
+}

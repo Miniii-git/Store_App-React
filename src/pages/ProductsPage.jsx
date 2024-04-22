@@ -6,6 +6,13 @@ import styles from "./products.module.css";
 import { Grid } from "react-loader-spinner";
 import { categories } from "../constants/constat_var";
 import { HiOutlineSearch } from "react-icons/hi";
+import { TiDelete } from "react-icons/ti";
+
+import {
+  searchFilter,
+  categoryFilter,
+  HandleUrlQueries,
+} from "../helpers/helperFunctions";
 
 function ProductsPage() {
   const [typing, setTyping] = useState("");
@@ -32,7 +39,8 @@ function ProductsPage() {
     setTyping(e.target.value.toLowerCase());
   };
 
-  const searchHandler = () => {
+  const searchHandler = (event) => {
+    event.preventDefault();
     setQuery((query) => ({ ...query, search: typing }));
     setTyping("");
   };
@@ -42,7 +50,7 @@ function ProductsPage() {
   };
 
   useEffect(() => {
-    if (query.category === "all") {
+    /*if (query.category === "all") {
       setProducts(
         data.filter((i) => i.title.toLocaleLowerCase().match(query.search))
       );
@@ -62,18 +70,36 @@ function ProductsPage() {
           ? setUrlQuery(query)
           : setUrlQuery({ category: query.category });
       }
-    }
+    }*/
+    setUrlQuery(HandleUrlQueries(query));
+    let searched_data = searchFilter(data, query.search);
+    let searched_categorized_data = categoryFilter(
+      searched_data,
+      query.category
+    );
+    setProducts(searched_categorized_data);
   }, [query]);
 
   return (
     <>
       <div className={styles.Search}>
-        <input type="text" value={typing} onChange={changeHandler} />
-        <button onClick={searchHandler}>
-          <HiOutlineSearch />
-        </button>
+        <form onSubmit={searchHandler}>
+          <input type="text" value={typing} onChange={changeHandler} />
+          <button onClick={searchHandler}>
+            <HiOutlineSearch />
+          </button>
+        </form>
       </div>
-      {query.search && <p>{`search result for : ${query.search}`}</p>}
+      {query.search && (
+        <div className={styles.search_result}>
+          <span>{`search result for : ${query.search}`}</span>
+          <TiDelete
+            title="delete the search filter"
+            id={styles.TiDelete}
+            onClick={() => setQuery((query) => ({ ...query, search: "" }))}
+          />
+        </div>
+      )}
       <div className={styles.ProductsPage}>
         <div>
           {isLoading ? (
