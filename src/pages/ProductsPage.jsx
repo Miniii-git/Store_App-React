@@ -9,54 +9,62 @@ import { HiOutlineSearch } from "react-icons/hi";
 
 function ProductsPage() {
   const [typing, setTyping] = useState("");
-  const [searchedWord, setSearchedWord] = useState("");
-  const { data, isLoading, products, setProducts } = useContext(DataContext);
+  const [products, setProducts] = useState([]);
   const [query, setQuery] = useState({ category: "all", search: "" });
+  const { data, isLoading } = useContext(DataContext);
   const [urlQuery, setUrlQuery] = useSearchParams();
+
+  useEffect(() => {
+    setProducts(data);
+    const qu = {};
+    const cat = urlQuery.get("category");
+    const sea = urlQuery.get("search");
+    if (cat) {
+      qu.category = cat;
+    } else {
+      qu.category = "all";
+    }
+    if (sea) qu.search = sea;
+    setQuery(qu);
+  }, [data]);
 
   const changeHandler = (e) => {
     setTyping(e.target.value.toLowerCase());
   };
 
   const searchHandler = () => {
-    setSearchedWord(typing);
     setQuery((query) => ({ ...query, search: typing }));
+    setTyping("");
   };
 
   const categoryHandler = (event) => {
     setQuery((query) => ({ ...query, category: event.target.value }));
-    /*if (event.target.value === "all") {
-    setProducts(data);
-    } else {
-     setProducts(data.filter((i) => i.category === event.target.value));
-     }*/
   };
 
   useEffect(() => {
     if (query.category === "all") {
       setProducts(
-        data.filter((i) => i.title.toLocaleLowerCase().match(searchedWord))
+        data.filter((i) => i.title.toLocaleLowerCase().match(query.search))
       );
       {
-        searchedWord ? setUrlQuery({ search: searchedWord }) : setUrlQuery({});
+        query.search ? setUrlQuery({ search: query.search }) : setUrlQuery({});
       }
     } else {
       setProducts(
         data.filter(
           (i) =>
-            i.title.toLocaleLowerCase().match(searchedWord) &&
+            i.title.toLocaleLowerCase().match(query.search) &&
             i.category === query.category
         )
       );
       {
-        searchedWord
+        query.search
           ? setUrlQuery(query)
           : setUrlQuery({ category: query.category });
       }
     }
   }, [query]);
 
-  console.log(query);
   return (
     <>
       <div className={styles.Search}>
@@ -65,6 +73,7 @@ function ProductsPage() {
           <HiOutlineSearch />
         </button>
       </div>
+      {query.search && <p>{`search result for : ${query.search}`}</p>}
       <div className={styles.ProductsPage}>
         <div>
           {isLoading ? (
