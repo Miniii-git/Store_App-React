@@ -33,6 +33,31 @@ function removeDefaultQueries(query) {
     delete query.category;
     return query;
   }
+  return query;
+}
+
+function editQueries(query) {
+  if (query.category === "all") {
+    const { category, ...rest } = query;
+    return rest;
+  }
+  if (query.search === "") {
+    const { search, ...rest } = query;
+    return rest;
+  }
+  return query;
+}
+
+function createQueryObject(cq, nq) {
+  if (nq.category === "all") {
+    const { category, ...rest } = cq;
+    return rest;
+  }
+  if (nq.search === "") {
+    const { search, ...rest } = cq;
+    return rest;
+  }
+  return { ...nq, ...cq };
 }
 
 export {
@@ -40,5 +65,7 @@ export {
   searchFilter,
   categoryFilter,
   HandleUrlQueries,
+  editQueries,
   removeDefaultQueries,
+  createQueryObject,
 };

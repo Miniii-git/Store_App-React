@@ -7,7 +7,6 @@ import { Grid } from "react-loader-spinner";
 import { categories } from "../constants/constat_var";
 import { HiOutlineSearch } from "react-icons/hi";
 import { TiDelete } from "react-icons/ti";
-
 import {
   searchFilter,
   categoryFilter,
@@ -71,6 +70,7 @@ function ProductsPage() {
           : setUrlQuery({ category: query.category });
       }
     }*/
+
     setUrlQuery(HandleUrlQueries(query));
     let searched_data = searchFilter(data, query.search);
     let searched_categorized_data = categoryFilter(
@@ -126,6 +126,12 @@ function ProductsPage() {
               key={index}
               onClick={categoryHandler}
               value={category.toLocaleLowerCase()}
+              style={{
+                color:
+                  query.category === category.toLocaleLowerCase()
+                    ? "red"
+                    : "black",
+              }}
             >
               {category}
             </button>
