@@ -26,15 +26,22 @@ function Item({ info }) {
       <p>${info.price} </p>
       <p>{info.rating.rate} *</p>
       <div className={styles.action}>
-        <button onClick={() => clickHandler("REMOVE_ITEM")}>
-          <AiOutlineDelete />
-        </button>
-        <button onClick={() => clickHandler("DECREASE")}>-</button>
-        <span> {quantity} </span>{" "}
-        <button onClick={() => clickHandler("INCREASE")}>+</button>
-        <button onClick={() => clickHandler("ADD_ITEM")}>
-          <TbShoppingBagCheck />
-        </button>
+        {quantity === 1 && (
+          <button onClick={() => clickHandler("REMOVE_ITEM")}>
+            <AiOutlineDelete />
+          </button>
+        )}
+        {quantity > 1 && (
+          <button onClick={() => clickHandler("DECREASE")}>-</button>
+        )}
+        {!!quantity && <span> {quantity} </span>}
+        {quantity === 0 ? (
+          <button onClick={() => clickHandler("ADD_ITEM")}>
+            <TbShoppingBagCheck />
+          </button>
+        ) : (
+          <button onClick={() => clickHandler("INCREASE")}>+</button>
+        )}
       </div>
     </div>
   );

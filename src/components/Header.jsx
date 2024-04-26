@@ -4,9 +4,11 @@ import styles from "./header.module.css";
 import { useContext } from "react";
 import { TedadBuyProvider } from "../context/TedadBuyContext";
 import { PiShoppingCartBold } from "react-icons/pi";
+import { sumProducts } from "../helpers/helperFunctions";
 
 function Header() {
-  //const { state } = useContext(TedadBuyProvider);
+  const { state } = useContext(TedadBuyProvider);
+  const total = sumProducts(state.selectedItems);
   return (
     <div className={styles.Header}>
       <h1>
@@ -16,7 +18,7 @@ function Header() {
         <Link to="/checkout">
           <PiShoppingCartBold id={styles.shoppingCard} />
         </Link>
-        <span id={styles.showTedad}> 0 </span>
+        <span id={styles.showTedad}> {total.totalNumber} </span>
       </div>
     </div>
   );
