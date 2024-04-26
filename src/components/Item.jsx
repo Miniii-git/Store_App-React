@@ -4,13 +4,16 @@ import styles from "./item.module.css";
 import { TbShoppingBagCheck } from "react-icons/tb";
 import { useContext } from "react";
 import { TedadBuyProvider } from "../context/TedadBuyContext";
-import { shortenText } from "../helpers/helperFunctions";
+import { shortenText, showProductQuantity } from "../helpers/helperFunctions";
+import { AiOutlineDelete } from "react-icons/ai";
 
 function Item({ info }) {
-  const { checkout, setCheckout } = useContext(TedadBuyProvider);
+  const { state, dispatch } = useContext(TedadBuyProvider);
+  const quantity = showProductQuantity(state, info.id);
 
-  function addHandler(event) {
-    setCheckout((checkout) => [...checkout, info]);
+  function clickHandler(type) {
+    dispatch({ type, payload: info });
+    console.log(quantity);
   }
 
   return (
@@ -18,15 +21,21 @@ function Item({ info }) {
       <Link to={`/products/${info.id}`}>
         <img src={info.image} width="150px" height="150px" alt={info.title} />
       </Link>
-
       <hr />
       <p>{shortenText(info.title)} </p>
       <p>${info.price} </p>
       <p>{info.rating.rate} *</p>
-      <button onClick={addHandler}>
-        <TbShoppingBagCheck style={{ fontSize: "30px" }} />
-      </button>
-      <span> 0</span>
+      <div className={styles.action}>
+        <button onClick={() => clickHandler("REMOVE_ITEM")}>
+          <AiOutlineDelete />
+        </button>
+        <button onClick={() => clickHandler("DECREASE")}>-</button>
+        <span> {quantity} </span>{" "}
+        <button onClick={() => clickHandler("INCREASE")}>+</button>
+        <button onClick={() => clickHandler("ADD_ITEM")}>
+          <TbShoppingBagCheck />
+        </button>
+      </div>
     </div>
   );
 }

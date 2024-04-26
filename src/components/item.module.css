@@ -6,3 +6,9 @@
   border-radius: 10px;
   background-color: white;
 }
+
+.action button {
+  font-size: 20px;
+  padding: 2px;
+  margin: 2px;
+}

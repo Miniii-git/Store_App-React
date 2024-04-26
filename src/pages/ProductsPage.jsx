@@ -22,6 +22,7 @@ function ProductsPage() {
 
   useEffect(() => {
     setProducts(data);
+    console.log(data);
     const qu = {};
     const cat = urlQuery.get("category");
     const sea = urlQuery.get("search");

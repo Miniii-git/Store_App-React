@@ -24,13 +24,6 @@ function ProductsDetails() {
         <img src={info.image} width="300px" height="300px" />
         <p>{info.description}</p>
       </div>
-
-      {/*<h4>{data[id].title}</h4>
-      <br />
-      <div className={styles.Info}>
-        <img src={data[id].image} width="300px" height="300px" />
-        <p>{data[id].description}</p>
-  </div>*/}
     </>
   );
 }
